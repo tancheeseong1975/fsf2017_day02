@@ -8,11 +8,17 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.use("/images", express.static(path.join(__dirname + "/images")));
 
 app.use("/picture", function(req, resp){
-    var imagefilnameArr = ["pic01.jpg", "pic02.jpg", "pic03.jpg"];
+    var imagefilnameArr = ["pic01.jpg", "pic02.jpg", "pic03.jpg", "pic04.jpg", "pic05.jpg", "pic06.jpg"];
+
     var randImgIdx = Math.floor(Math.random() * imagefilnameArr.length);
+
     var imgfilename = imagefilnameArr[randImgIdx];
-    resp.type("text/html"); //Representation of the resource
-    resp.send("<img src='/images/" + imgfilename + "'>");
+
+//    resp.type("text/html"); //Representation of the resource
+//    resp.send("<img src='/images/" + imgfilename + "'>");
+
+      resp.type("image/jpeg");
+      resp.sendfile(__dirname + "/images/" + imgfilename);
 });
 
 
