@@ -1,5 +1,6 @@
 var express = require("express");
 var path    = require("path");
+var filesys = require("fs");
 
 // create an instance of express app
 var app = express();
@@ -8,17 +9,21 @@ app.use(express.static(path.join(__dirname + "/public")));
 app.use("/images", express.static(path.join(__dirname + "/images")));
 
 app.use("/picture", function(req, resp){
-    var imagefilnameArr = ["pic01.jpg", "pic02.jpg", "pic03.jpg", "pic04.jpg", "pic05.jpg", "pic06.jpg"];
+    // hardcode filename
+    //var imagefilnameArr = ["pic01.jpg", "pic02.jpg", "pic03.jpg", "pic04.jpg", "pic05.jpg", "pic06.jpg"];
+    
+    //lists down the content of the directory and make it into array
+    var imagefilnameArr = filesys.readdirSync('./images/');
 
     var randImgIdx = Math.floor(Math.random() * imagefilnameArr.length);
 
     var imgfilename = imagefilnameArr[randImgIdx];
 
-//    resp.type("text/html"); //Representation of the resource
-//    resp.send("<img src='/images/" + imgfilename + "'>");
+    //resp.type("text/html"); //Representation of the resource
+    //resp.send("<img src='/images/" + imgfilename + "'>");
 
-      resp.type("image/jpeg");
-      resp.sendfile(__dirname + "/images/" + imgfilename);
+    resp.type("image/jpeg");
+    resp.sendfile(__dirname + "/images/" + imgfilename);
 });
 
 
